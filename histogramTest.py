@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
     A short python script to create shiny graphs based on Facebook Graph API collected
     
@@ -26,11 +27,12 @@ import matplotlib.pyplot as plt
 import csv
 
 
-with open('fbposts.txt') as f:
+with open('fbposts.txt', 'rU') as f:
     reader = csv.reader(f, delimiter="\t")
     d = list(reader)
 
 for rows in d:
+    if not len(rows): continue
     if rows[7] == "Post":
         x.append(int(rows[5]))
 

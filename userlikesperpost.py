@@ -1,7 +1,10 @@
+#!/usr/bin/env python
 """
     A short python script to analyze the most liked posts/comments by users
     
     Copyright (C) 2014  Russel M. Neiss
+	Modifications copyright 2015 Marc Stober
+	
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,30 +23,45 @@
 """
 
 import numpy as np
-import matplotlib.mlab as mlab
-import matplotlib.pyplot as plt
+#import matplotlib.mlab as mlab
+#import matplotlib.pyplot as plt
 import csv
 import sys
 
 user=[]
 
-with open('fbposts.txt') as f:
+with open('fbposts.txt', 'rU') as f:
     reader = csv.reader(f, delimiter="\t")
     d = list(reader)
 
-for rows in d:
-    if rows[7] == "Post":
-        user.append((rows[4]))
+for i, rows in enumerate(d):
+	if not len(rows): continue
+	try:
+		if rows[7] == "Post":
+			user.append((rows[4]))
+	except:
+		print "Error in row %s:" % i
+		print rows
+		raise
 
 unique_users = set(user)
 
+fd = open('JEDLABUsers.txt','w')
+thisLine= ('\neachuser\tpostCount\tlikeCount\tmean(likes)\tmedian(likes)')
+fd.write(thisLine)
+fd.close()
+
 for eachuser in unique_users:
+
     likes=[]
     likeCount = 0
     postCount = 0
     for rows in d:
+
+        if not len(rows): continue
+        print rows[4], eachuser
         if rows[4] == eachuser:
-            if rows[7] == "Comments":
+            if rows[7] == "Comment":
 
                 postCount = postCount + 1
                 likeCount = likeCount + int(rows[5])
