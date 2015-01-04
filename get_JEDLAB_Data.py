@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
     A short python script to harness Facebook Graph API to collect various data points for analysis
     
@@ -28,14 +29,14 @@ fbconsole.logout()
 
 fbconsole.authenticate()
 
+print "authenticated!!!"
+
 allContent = []
 
 i = 0
 for post in fbconsole.iter_pages(fbconsole.get('/119600664905706/feed', {'limit':5})):
     if 'message' in post:
         thisLine = "\n"
-    
-
         
         dateTime = post['created_time'].encode('utf8').split('T')
 		
@@ -76,7 +77,7 @@ for post in fbconsole.iter_pages(fbconsole.get('/119600664905706/feed', {'limit'
 
         
         i=i+1
-       # print "post "+str(i)
+        print "post "+str(i)
 
 
 
@@ -122,7 +123,7 @@ for post in fbconsole.iter_pages(fbconsole.get('/119600664905706/feed', {'limit'
             
             comment = comment+1
             
-        #    print str(i) + " comment "+ str(comment)
+            print str(i) + " comment "+ str(comment)
 
 
 
